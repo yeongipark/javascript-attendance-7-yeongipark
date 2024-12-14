@@ -56,7 +56,7 @@ export default class AttendanceController {
     Validator.checkFuture(date);
     Validator.validateWeekend(date);
     const time = await InputView.changeTime();
-    Validator.validateGoingFormat(time);
+    //Validator.validateGoingFormat(time);
 
     const { day, beforeClock, beforeStatus, afterClock, afterStatus } =
       this.#attendance.changeAttendanceTime(name, date, time);

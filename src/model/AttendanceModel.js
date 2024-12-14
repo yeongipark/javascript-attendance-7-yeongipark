@@ -60,9 +60,9 @@ export default class Attendance {
 
     if (status !== '결석') {
       const attendanceList = this.#getSpecificAttendance(name);
-      const findDay = attendanceList.find((info) => +info.day === +day);
-      findDay.hour = hour;
-      findDay.minute = minute;
+      const findDay = attendanceList.findIndex((info) => +info.day === +day);
+      attendanceList[findDay].hour = hour;
+      attendanceList[findDay].minute = minute;
     }
 
     return {
@@ -189,7 +189,8 @@ export default class Attendance {
 
   getTodayAttendance() {
     const today = DateTimes.now().getDate();
-    const list = today.filter((info) => +info.day === today);
+
+    const list = this.#attendanceList.filter((info) => +info.day === today);
     return list.map((info) => info.name);
   }
 

@@ -14,16 +14,21 @@ import {
 
 export default class Validator {
   static validateFunctionInput(functionInput) {
-    if (!FUNCTION_INPUT_LIST.includes(functionInput)) {
+    if (
+      functionInput !== '1' &&
+      functionInput !== '2' &&
+      functionInput !== '3' &&
+      functionInput !== '4' &&
+      functionInput !== 'Q'
+    )
       throwError(ERROR_MESSAGE.FORMAT);
-    }
   }
 
   static validateWeekend(day) {
     const dayOfWeek = DAY_OF_WEEK[day];
     if (WEEKEND.includes(dayOfWeek) || day === HOLIDAY) {
       throwError(
-        `${ERROR_PREFIX} 12월 ${String(day).padStart(2, 0)}일 ${dayOfWeek}요일은 등교일하는 일이 아닙니다.`,
+        `${ERROR_PREFIX} 12월 ${String(day).padStart(2, 0)}일 ${dayOfWeek}요일은 등교하는 날이 아닙니다.`,
       );
     }
   }
@@ -42,10 +47,13 @@ export default class Validator {
 
   static validateGoingFormat(goingTime) {
     const regExp = /\d\d:\d\d/;
-
     if (!regExp.test(goingTime)) {
       throwError(ERROR_MESSAGE.FORMAT);
     }
+
+    const hour = +goingTime.slice(0, 2);
+    const minute = +goingTime.slice(3);
+    if (hour > 24 || minute >= 60) throwError(ERROR_MESSAGE.FORMAT);
   }
 
   static validateGoingTime(goingTime, day) {
