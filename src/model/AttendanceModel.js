@@ -101,7 +101,7 @@ export default class Attendance {
     if (dayOfWeek === MONDAY) {
       if (+hour > MONDAY_OPEN_TIME) return '결석';
       if (+hour === MONDAY_OPEN_TIME && +minute > 30) return '결석';
-    } else if (+hour === OTHER_OPEN_TIME && +hour > 30) {
+    } else if (+hour === OTHER_OPEN_TIME && +minute > 30) {
       return '결석';
     }
     if (+minute > 5 && +minute <= 30) return '지각';
