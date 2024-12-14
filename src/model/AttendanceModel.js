@@ -59,10 +59,11 @@ export default class Attendance {
     const status = this.#getStatus(hour, minute, +day);
 
     if (status !== '결석') {
-      const attendanceList = this.#getSpecificAttendance(name);
-      const findDay = attendanceList.findIndex((info) => +info.day === +day);
-      attendanceList[findDay].hour = hour;
-      attendanceList[findDay].minute = minute;
+      const findDay = this.#attendanceList.findIndex(
+        (info) => +info.day === +day && info.name === name,
+      );
+      this.#attendanceList[findDay].hour = hour;
+      this.#attendanceList[findDay].minute = minute;
     }
 
     return {
@@ -133,8 +134,8 @@ export default class Attendance {
     const list = attendanceList.map((info) => {
       let status = '';
       const dayOfWeek = DAY_OF_WEEK[+info.day];
-      if (+info.minute > PERCEPTION_NUMBER) status = '지각';
-      else if (+info.minute > ATTENDANCE_NUMBER) status = '결석';
+      if (+info.minute > ATTENDANCE_NUMBER) status = '결석';
+      else if (+info.minute > PERCEPTION_NUMBER) status = '지각';
       else status = '출석';
       return {
         day: info.day,

@@ -14,8 +14,8 @@ export default class AttendanceController {
   }
 
   async run() {
+    await this.#attendance.init();
     while (this.#flag) {
-      await this.#attendance.init();
       this.#flag = await this.#processInputFunctionNumber();
       await this.#play();
     }
