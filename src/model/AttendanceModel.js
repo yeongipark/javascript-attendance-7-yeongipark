@@ -58,13 +58,11 @@ export default class Attendance {
 
     const status = this.#getStatus(hour, minute, +day);
 
-    if (status !== '결석') {
-      const findDay = this.#attendanceList.findIndex(
-        (info) => +info.day === +day && info.name === name,
-      );
-      this.#attendanceList[findDay].hour = hour;
-      this.#attendanceList[findDay].minute = minute;
-    }
+    const findDay = this.#attendanceList.findIndex(
+      (info) => +info.day === +day && info.name === name,
+    );
+    this.#attendanceList[findDay].hour = hour;
+    this.#attendanceList[findDay].minute = minute;
 
     return {
       day,
@@ -103,7 +101,7 @@ export default class Attendance {
     if (dayOfWeek === MONDAY) {
       if (+hour > MONDAY_OPEN_TIME) return '결석';
       if (+hour === MONDAY_OPEN_TIME && +minute > 30) return '결석';
-    } else if (+hour === OTHER_OPEN_TIME && +hour > OTHER_OPEN_TIME) {
+    } else if (+hour === OTHER_OPEN_TIME && +hour > 30) {
       return '결석';
     }
     if (+minute > 5 && +minute <= 30) return '지각';
